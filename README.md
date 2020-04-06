@@ -4,7 +4,6 @@ A docker container for developing Laravel applications.
 - PHPUnit
 - Yarn
 - Composer
-- Laravel/Vapor
 - Common PHP extensions
 
 See the Dockerfile for additional details.
