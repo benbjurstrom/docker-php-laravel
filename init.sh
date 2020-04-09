@@ -1,9 +1,9 @@
 #!/bin/sh
 
 ##
-# exit if a command returns a non-zero exit code, print the commands and their # args as they are executed, exit if any unbound variables
+# exit if a command returns a non-zero exit code, exit if any unbound variables
 #
-set -e -x -u
+set -e -u
 
 # Set PHP memory limit value.
 sudo sed -i "/memory_limit = .*/c\memory_limit = $PHP_MEMORY_LIMIT" /etc/php7/php.ini
@@ -48,7 +48,7 @@ fi
 # Run php-fpm
 #
 if [ "$APP_MODE" = "app" ]; then
-	php-fpm -F
+	php-fpm -F -R
 fi
 
 ##
@@ -69,7 +69,7 @@ fi
 # Configure a cron job to a run laravel jobs heartbeat every minute
 #
 if [ "$APP_MODE" = "job" ]; then
-	 supercronic /home/prezet/crontab
+	 supercronic /root/crontab
 fi
 
 echo "Variable APP_MODE must be one of app, queue, websocket, or job"

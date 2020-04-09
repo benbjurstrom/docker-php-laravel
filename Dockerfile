@@ -15,10 +15,9 @@ ENV OPCACHE_MODE="normal" \
     COMPOSER_PROCESS_TIMEOUT=1200
 
 # Add the ENTRYPOINT script
-ADD init.sh /scripts/init.sh
-ADD crontab /home/prezet/crontab
-ADD bashrc /home/prezet/.bashrc
-ADD bashrc /home/bashrc
+ADD init.sh /root/init.sh
+ADD crontab /root/crontab
+ADD bashrc /root/.bashrc
 
 RUN echo "---> Add System Packages" && \
     apk add --update \
@@ -32,15 +31,11 @@ RUN echo "---> Add System Packages" && \
     yarn \
     unzip && \
 
-    echo "---> Adding the prezet user" && \
-    adduser -D -u 1000 prezet && \
+    echo "---> Adding /var/www" && \
     mkdir -p /var/www && \
-    chmod +x /scripts/init.sh && \
-    chown -R prezet:prezet /home/prezet && \
-    chown -R prezet:prezet /var/www && \
+    chmod +x /root/init.sh && \
     wget -O /tini https://github.com/krallin/tini/releases/download/v0.18.0/tini-static && \
     chmod +x /tini && \
-    echo "prezet  ALL = ( ALL ) NOPASSWD: ALL" >> /etc/sudoers && \
 
     echo "---> Add PHP repositories" && \
     wget -O /etc/apk/keys/php-alpine.rsa.pub https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub && \
@@ -83,10 +78,10 @@ RUN echo "---> Add System Packages" && \
     sudo ln -s /usr/bin/php7 /usr/bin/php && \
     sudo ln -s /usr/bin/php-cgi7 /usr/bin/php-cgi && \
     sudo ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm && \
-    sed -i "/user = .*/c\user = prezet" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/^group = .*/c\group = prezet" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/listen.owner = .*/c\listen.owner = prezet" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/listen.group = .*/c\listen.group = prezet" /etc/php7/php-fpm.d/www.conf && \
+    sed -i "/user = .*/c\user = root" /etc/php7/php-fpm.d/www.conf && \
+    sed -i "/^group = .*/c\group = root" /etc/php7/php-fpm.d/www.conf && \
+    sed -i "/listen.owner = .*/c\listen.owner = root" /etc/php7/php-fpm.d/www.conf && \
+    sed -i "/listen.group = .*/c\listen.group = root" /etc/php7/php-fpm.d/www.conf && \
     sed -i "/listen = .*/c\listen = [::]:9000" /etc/php7/php-fpm.d/www.conf && \
     sed -i "/;access.log = .*/c\access.log = /proc/self/fd/2" /etc/php7/php-fpm.d/www.conf && \
     sed -i "/;clear_env = .*/c\clear_env = no" /etc/php7/php-fpm.d/www.conf && \
@@ -118,17 +113,14 @@ RUN echo "---> Add System Packages" && \
     apk del --purge ca-certificates curl && \
     rm -rf /tmp/* /var/cache/apk/*
 
-# Define the running user
-USER prezet
-
 # Set the application directory
 WORKDIR "/var/www"
 
 # Set our path
-ENV PATH=/home/prezet/.composer/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH=/root/.composer/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Run init.sh
-ENTRYPOINT ["/tini", "--", "/scripts/init.sh"]
+ENTRYPOINT ["/tini", "--", "/root/init.sh"]
 
 # Allow the container to also be used as a non daemon and single base image
 CMD ["/bin/bash"]
