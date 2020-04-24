@@ -9,5 +9,4 @@ A docker container for developing Laravel applications.
 See the Dockerfile for additional details.
 
 ## Getting Started
-$APP_MODE must be set to to one of "app", "queue", "websocket", or "job".
-
+$CONTAINER_ROLE must be set to to one of "app", "queue", or "scheduler".

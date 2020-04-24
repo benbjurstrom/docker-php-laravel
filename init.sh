@@ -8,6 +8,7 @@ set -e -u
 # Set PHP memory limit value.
 sudo sed -i "/memory_limit = .*/c\memory_limit = $PHP_MEMORY_LIMIT" /etc/php7/php.ini
 
+
 # OPCache extreme mode.
 if [[ $OPCACHE_MODE == "extreme" ]]; then
     # enable extreme caching for OPCache.
@@ -47,30 +48,23 @@ fi
 ##
 # Run php-fpm
 #
-if [ "$APP_MODE" = "app" ]; then
+if [ "$CONTAINER_ROLE" = "app" ]; then
 	php-fpm -F -R
 fi
 
 ##
 # Run a laravel queue worker
 #
-if [ "$APP_MODE" = "queue" ]; then
+if [ "$CONTAINER_ROLE" = "queue" ]; then
 		php /var/www/artisan queue:work $QUEUE_CONNECTION
 fi
 
 ##
-# Run laravel websockets
+# Configure a cronjob to a run a laravel scheduler heartbeat every five minutes
 #
-if [ "$APP_MODE" = "websocket" ]; then
-	 php /var/www/artisan websockets:serve
-fi
-
-##
-# Configure a cron job to a run laravel jobs heartbeat every minute
-#
-if [ "$APP_MODE" = "job" ]; then
+if [ "$CONTAINER_ROLE" = "scheduler" ]; then
 	 supercronic /root/crontab
 fi
 
-echo "Variable APP_MODE must be one of app, queue, websocket, or job"
+echo "Variable CONTAINER_ROLE must be one of app, queue, websocket, or scheduler"
 exit 1

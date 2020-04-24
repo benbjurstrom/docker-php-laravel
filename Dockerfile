@@ -29,6 +29,7 @@ RUN echo "---> Add System Packages" && \
     vim \
     wget \
     yarn \
+    postgresql-client \
     unzip && \
 
     echo "---> Adding /var/www" && \
@@ -86,13 +87,14 @@ RUN echo "---> Add System Packages" && \
     sed -i "/;access.log = .*/c\access.log = /proc/self/fd/2" /etc/php7/php-fpm.d/www.conf && \
     sed -i "/;clear_env = .*/c\clear_env = no" /etc/php7/php-fpm.d/www.conf && \
     sed -i "/;catch_workers_output = .*/c\catch_workers_output = yes" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/pid = .*/c\;pid = /run/php/php7.1-fpm.pid" /etc/php7/php-fpm.conf && \
+    sed -i "/pid = .*/c\;pid = /run/php/php7.4-fpm.pid" /etc/php7/php-fpm.conf && \
     sed -i "/;daemonize = .*/c\daemonize = yes" /etc/php7/php-fpm.conf && \
     sed -i "/error_log = .*/c\error_log = /proc/self/fd/2" /etc/php7/php-fpm.conf && \
     sed -i "/post_max_size = .*/c\post_max_size = 1000M" /etc/php7/php.ini && \
     sed -i "/upload_max_filesize = .*/c\upload_max_filesize = 1000M" /etc/php7/php.ini && \
     sed -i "/memory_limit = .*/c\memory_limit = 1024M" /etc/php7/php.ini && \
     sed -i "/zend_extension=xdebug/c\;zend_extension=xdebug" /etc/php7/conf.d/00_xdebug.ini && \
+    sed -i "/extension=redis.so" /etc/php7/conf.d/00_xdebug.ini && \
 
     echo "---> Installing Composer" && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
