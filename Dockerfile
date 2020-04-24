@@ -94,7 +94,6 @@ RUN echo "---> Add System Packages" && \
     sed -i "/upload_max_filesize = .*/c\upload_max_filesize = 1000M" /etc/php7/php.ini && \
     sed -i "/memory_limit = .*/c\memory_limit = 1024M" /etc/php7/php.ini && \
     sed -i "/zend_extension=xdebug/c\;zend_extension=xdebug" /etc/php7/conf.d/00_xdebug.ini && \
-    sed -i "/extension=redis.so" /etc/php7/conf.d/00_xdebug.ini && \
 
     echo "---> Installing Composer" && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
