@@ -74,6 +74,7 @@ RUN echo "---> Add System Packages" && \
     php-xsl \
     php-zip \
     php-zlib && \
+    php-ctype && \
 
     echo "---> Configuring PHP" && \
     sudo ln -s /usr/bin/php7 /usr/bin/php && \
