@@ -73,7 +73,7 @@ RUN echo "---> Add System Packages" && \
     php-xmlreader \
     php-xsl \
     php-zip \
-    php-zlib && \
+    php-zlib \
     php-ctype && \
 
     echo "---> Configuring PHP" && \
