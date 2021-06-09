@@ -1,7 +1,7 @@
 ###
 # Based on https://github.com/ambientum/ambientum/blob/master/php/7.3/Dockerfile
 #
-FROM alpine:3.10
+FROM alpine:3.12
 
 # Repository/Image Maintainer
 LABEL maintainer="Ben Bjurstrom <ben@jelled.com>"
@@ -39,73 +39,73 @@ RUN echo "---> Add System Packages" && \
     chmod +x /tini && \
 
     echo "---> Add PHP repositories" && \
-    wget -O /etc/apk/keys/php-alpine.rsa.pub https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub && \
-    echo "http://dl-cdn.alpinelinux.org/alpine/v3.10/main" > /etc/apk/repositories && \
-    echo "http://dl-cdn.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories && \
-    echo "https://dl.bintray.com/php-alpine/v3.10/php-7.4" >> /etc/apk/repositories && \
+    wget -O /etc/apk/keys/php-alpine.rsa.pub https://packages.whatwedo.ch/php-alpine.rsa.pub && \
+    echo "http://dl-cdn.alpinelinux.org/alpine/v3.12/main" > /etc/apk/repositories && \
+    echo "http://dl-cdn.alpinelinux.org/alpine/v3.12/community" >> /etc/apk/repositories && \
+    echo "https://packages.whatwedo.ch/php-alpine/v3.12/php-8.0" >> /etc/apk/repositories && \
 
     echo "---> Install PHP and Extensions" && \
     apk add --update \
-    php \
-    php-bcmath \
-    php-curl \
-    php-phpdbg \
-    php-exif \
-    php-fpm \
-    php-gd \
-    php-iconv \
-    php-imagick \
-    php-intl \
-    php-json \
-    php-mbstring \
-    php-memcached \
-    php-opcache \
-    php-openssl \
-    php-pcntl \
-    php-pdo_pgsql \
-    php-pgsql \
-    php-phar \
-    php-posix \
-    php-redis \
-    php-sodium \
-    php-xdebug \
-    php-xml \
-    php-xmlreader \
-    php-xsl \
-    php-zip \
-    php-zlib && \
+    php8 \
+    php8-bcmath \
+    php8-curl \
+    php8-phpdbg \
+    php8-exif \
+    php8-fpm \
+    php8-gd \
+    php8-iconv \
+    php8-imagick \
+    php8-intl \
+    # php8-json \
+    php8-mbstring \
+    php8-memcached \
+    php8-opcache \
+    php8-openssl \
+    php8-pcntl \
+    php8-pdo_pgsql \
+    php8-pgsql \
+    php8-phar \
+    php8-posix \
+    php8-redis \
+    php8-sodium \
+    php8-xdebug \
+    php8-xml \
+    php8-xmlreader \
+    php8-xsl \
+    php8-zip \
+    php8-zlib && \
 
     echo "---> Configuring PHP" && \
-    sudo ln -s /usr/bin/php7 /usr/bin/php && \
+    sudo ln -s /usr/bin/php8 /usr/bin/php && \
     sudo ln -s /usr/bin/php-cgi7 /usr/bin/php-cgi && \
     sudo ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm && \
-    sed -i "/user = .*/c\user = root" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/^group = .*/c\group = root" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/listen.owner = .*/c\listen.owner = root" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/listen.group = .*/c\listen.group = root" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/listen = .*/c\listen = [::]:9000" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/;access.log = .*/c\access.log = /proc/self/fd/2" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/;clear_env = .*/c\clear_env = no" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/;catch_workers_output = .*/c\catch_workers_output = yes" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "/pid = .*/c\;pid = /run/php/php7.4-fpm.pid" /etc/php7/php-fpm.conf && \
-    sed -i "/;daemonize = .*/c\daemonize = yes" /etc/php7/php-fpm.conf && \
-    sed -i "/error_log = .*/c\error_log = /proc/self/fd/2" /etc/php7/php-fpm.conf && \
-    sed -i "/post_max_size = .*/c\post_max_size = 1000M" /etc/php7/php.ini && \
-    sed -i "/upload_max_filesize = .*/c\upload_max_filesize = 1000M" /etc/php7/php.ini && \
-    sed -i "/memory_limit = .*/c\memory_limit = 1024M" /etc/php7/php.ini && \
-    sed -i "/zend_extension=xdebug/c\;zend_extension=xdebug" /etc/php7/conf.d/00_xdebug.ini && \
+    sed -i "/user = .*/c\user = root" /etc/php8/php-fpm.d/www.conf && \
+    sed -i "/^group = .*/c\group = root" /etc/php8/php-fpm.d/www.conf && \
+    sed -i "/listen.owner = .*/c\listen.owner = root" /etc/php8/php-fpm.d/www.conf && \
+    sed -i "/listen.group = .*/c\listen.group = root" /etc/php8/php-fpm.d/www.conf && \
+    sed -i "/listen = .*/c\listen = [::]:9000" /etc/php8/php-fpm.d/www.conf && \
+    sed -i "/;access.log = .*/c\access.log = /proc/self/fd/2" /etc/php8/php-fpm.d/www.conf && \
+    sed -i "/;clear_env = .*/c\clear_env = no" /etc/php8/php-fpm.d/www.conf && \
+    sed -i "/;catch_workers_output = .*/c\catch_workers_output = yes" /etc/php8/php-fpm.d/www.conf && \
+    sed -i "/pid = .*/c\;pid = /run/php/php8.0-fpm.pid" /etc/php8/php-fpm.conf && \
+    sed -i "/;daemonize = .*/c\daemonize = yes" /etc/php8/php-fpm.conf && \
+    sed -i "/error_log = .*/c\error_log = /proc/self/fd/2" /etc/php8/php-fpm.conf && \
+    sed -i "/post_max_size = .*/c\post_max_size = 1000M" /etc/php8/php.ini && \
+    sed -i "/upload_max_filesize = .*/c\upload_max_filesize = 1000M" /etc/php8/php.ini && \
+    sed -i "/memory_limit = .*/c\memory_limit = 1024M" /etc/php8/php.ini && \
+    sed -i "/zend_extension=xdebug/c\;zend_extension=xdebug" /etc/php8/conf.d/00_xdebug.ini && \
 
     echo "---> Installing Composer" && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
 
     echo "---> Installing PHPUnit" && \
-    wget https://phar.phpunit.de/phpunit-8.2.phar && \
-    chmod +x phpunit-8.2.phar && \
-    mv phpunit-8.2.phar /usr/local/bin/phpunit && \
+    wget https://phar.phpunit.de/phpunit-9.5.5.phar && \
+    chmod +x phpunit-9.5.5.phar && \
+    mv phpunit-9.5.5.phar /usr/local/bin/phpunit && \
 
     echo "---> Installing Supercronic" && \
-    curl -fsSLO "https://github.com/aptible/supercronic/releases/download/v0.1.9/supercronic-linux-amd64" && \
-    echo "5ddf8ea26b56d4a7ff6faecdd8966610d5cb9d85  supercronic-linux-amd64" | sha1sum -c - && \
+    curl -fsSLO "https://github.com/aptible/supercronic/releases/download/v0.1.12/supercronic-linux-amd64" && \
+    echo "048b95b48b708983effb2e5c935a1ef8483d9e3e  supercronic-linux-amd64" | sha1sum -c - && \
     chmod +x "supercronic-linux-amd64" && \
     mv "supercronic-linux-amd64" "/usr/local/bin/supercronic-linux-amd64" && \
     ln -s "/usr/local/bin/supercronic-linux-amd64" /usr/local/bin/supercronic && \

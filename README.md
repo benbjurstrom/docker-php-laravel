@@ -1,7 +1,7 @@
 # benbjurstrom/php-laravel
 A docker container for developing Laravel applications.
-- PHP 7.4
-- PHPUnit
+- PHP 8.0
+- PHPUnit 9.5.5
 - Yarn
 - Composer
 - Common PHP extensions
