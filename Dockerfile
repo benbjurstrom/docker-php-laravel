@@ -77,8 +77,8 @@ RUN echo "---> Add System Packages" && \
 
     echo "---> Configuring PHP" && \
     sudo ln -s /usr/bin/php8 /usr/bin/php && \
-    sudo ln -s /usr/bin/php-cgi7 /usr/bin/php-cgi && \
-    sudo ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm && \
+    sudo ln -s /usr/bin/php-cgi8 /usr/bin/php-cgi && \
+    sudo ln -s /usr/sbin/php-fpm8 /usr/sbin/php-fpm && \
     sed -i "/user = .*/c\user = root" /etc/php8/php-fpm.d/www.conf && \
     sed -i "/^group = .*/c\group = root" /etc/php8/php-fpm.d/www.conf && \
     sed -i "/listen.owner = .*/c\listen.owner = root" /etc/php8/php-fpm.d/www.conf && \
