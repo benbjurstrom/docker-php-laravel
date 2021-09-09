@@ -46,6 +46,7 @@ RUN echo "---> Add System Packages" && \
 
     echo "---> Install PHP and Extensions" && \
     apk add --update \
+
     php8 \
     php8-bcmath \
     php8-curl \
@@ -74,6 +75,7 @@ RUN echo "---> Add System Packages" && \
     php8-xsl \
     php8-zip \
     php8-zlib && \
+    php8-ctype && \
 
     echo "---> Configuring PHP" && \
     sudo ln -s /usr/bin/php8 /usr/bin/php && \
